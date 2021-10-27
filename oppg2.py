@@ -91,7 +91,7 @@ def b():
         y10.append(ssprk3(y0, t0, T, f, n)[-1][-1])
     e = []
     for y in y10:
-        e.append(abs(y_axtual - y))
+        e.append(abs(y_actual - y))
     p = []
     for i in range(len(N)-1):
         p.append(np.log(e[i]/e[i+1])/np.log(N[i]/N[i+1]))
