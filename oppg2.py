@@ -40,7 +40,6 @@ class RungeKutta:
 
         return np.array(tk), np.array(yk)
 
-
 def f(tk, yk):
     return -yk
 
@@ -57,20 +56,8 @@ def ssprk3(y0, t0, T, f, N_max):
     c = np.array([0, 1, 1/2])
     gottlieb = RungeKutta(a, b, c)
     return gottlieb.solve(y0, t0, T, f, N_max)
-    
 
-def __main__():
-    parameters = {'figure.figsize': (7.0, 7.0), 'axes.grid': True, 'lines.markersize': 6, 'lines.linewidth': 2, 'font.size': 12}
-
-    plt.rcParams.update(parameters)
-
-    arr = np.array([1.0, 2.0])
-    s = 3
-
-    ks = [ np.zeros_like(arr, dtype=np.double) for i in range(s) ]
-
-    print(ks)
-
+class a():
     t0 = 0
     T = 10
     y0 = 1
@@ -83,6 +70,54 @@ def __main__():
     plt.plot(tkG, ykG, color="blue", label="Gottlieb")
 
     plt.show()
+
+def b():
+    m = []
+    for i in range(10):
+        m.append(2**-i)
+
+    N = []
+    for s in m:
+        N.append(int(10/s))
+    
+    y0 = 1
+    t0 = 0
+    T = 10
+
+    y_actual = np.e**(-10)
+
+    y10 = []
+    for n in N:
+        y10.append(ssprk3(y0, t0, T, f, n)[-1][-1])
+    e = []
+    for y in y10:
+        e.append(abs(y_axtual - y))
+    p = []
+    for i in range(len(N)-1):
+        p.append(np.log(e[i]/e[i+1])/np.log(N[i]/N[i+1]))
+    print(p)
+
+def c():
+
+    y0 = 1
+    t0 = 0
+    T = 0.5
+    
+    y_actual = np.e**(-(T)**2)
+
+    y_m = explicit_mid_point_rule(y0, t0, T, f, 3)[1]
+    y_s = ssprk3(y0, t0, T, f, 2)[1]
+
+    e_midpoint = abs(y_real - y_m[-1])
+    e_gottlieb = abs(y_real - y_s[-1])
+
+    print(e_m, e_s)
+    
+
+def __main__():
+    parameters = {'figure.figsize': (7.0, 7.0), 'axes.grid': True, 'lines.markersize': 6, 'lines.linewidth': 2, 'font.size': 12}
+    plt.rcParams.update(parameters)
+
 
 if __name__ == '__main__':
     __main__()
